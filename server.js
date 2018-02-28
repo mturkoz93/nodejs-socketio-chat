@@ -1,13 +1,17 @@
 var http = require('http');
+var express = require('express');
 
-var server = http.createServer(
+var app = express();
+var bodyparser = require('body-parser');
 
-    function(req,res){
-  
-        res.write(req.url);
-        res.end();
-    }
-);
+app.use(bodyparser.urlencoded({'extended':'true'}));
 
-server.listen(3000);
-console.log("running..");
+app.get("/login",function(req,res){
+    res.sendFile(__dirname+"/post.html");
+});
+
+app.post("/login",function(req,res){
+    res.send(req.body["username"]+" girilen kullanıcı ismi..");
+});
+
+app.listen(8080);
